@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace ERP_user_management_sys.Models
 {
@@ -10,6 +9,7 @@ namespace ERP_user_management_sys.Models
         
         }
         public DbSet<User> Users { get; set; }
+        
         public DbSet<Role> Roles { get; set; }
 
         public DbSet<RolePermission> RolePermissions { get; set; }
@@ -17,11 +17,5 @@ namespace ERP_user_management_sys.Models
         public DbSet<Permission> Permissions { get; set; }
 
         public DbSet<Feature> Features { get; set; }
-
-
-
-
-
-
     }
 }

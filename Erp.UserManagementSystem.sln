@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP_user_management_sys", "ERP_user_management_sys.csproj", "{CBE7D1E8-E7C7-40E7-98F6-FD8FC7E99954}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.UserManagementSystem", "Erp.UserManagementSystem.csproj", "{CBE7D1E8-E7C7-40E7-98F6-FD8FC7E99954}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

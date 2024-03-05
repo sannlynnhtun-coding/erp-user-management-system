@@ -1,4 +1,4 @@
-namespace ERP_user_management_sys
+namespace Erp.UserManagementSystem
 {
     public class WeatherForecast
     {

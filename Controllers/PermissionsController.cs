@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using ERP_user_management_sys.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ERP_user_management_sys.Models;
 
-namespace ERP_user_management_sys.Controllers
+namespace Erp.UserManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
