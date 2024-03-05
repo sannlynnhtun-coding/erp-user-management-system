@@ -6,27 +6,20 @@ namespace Erp.UserManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PermissionsController : ControllerBase
+    public class PermissionsController(UserManagementDBContext context) : ControllerBase
     {
-        private readonly UserManagementDBContext _context;
-
-        public PermissionsController(UserManagementDBContext context)
-        {
-            _context = context;
-        }
-
         // GET: api/Permissions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Permission>>> GetPermissions()
         {
-            return await _context.Permissions.ToListAsync();
+            return await context.Permissions.ToListAsync();
         }
 
         // GET: api/Permissions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Permission>> GetPermission(int id)
         {
-            var permission = await _context.Permissions.FindAsync(id);
+            var permission = await context.Permissions.FindAsync(id);
 
             if (permission == null)
             {
@@ -46,11 +39,11 @@ namespace Erp.UserManagementSystem.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(permission).State = EntityState.Modified;
+            context.Entry(permission).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -72,8 +65,8 @@ namespace Erp.UserManagementSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<Permission>> PostPermission(Permission permission)
         {
-            _context.Permissions.Add(permission);
-            await _context.SaveChangesAsync();
+            context.Permissions.Add(permission);
+            await context.SaveChangesAsync();
 
             return CreatedAtAction("GetPermission", new { id = permission.Id }, permission);
         }
@@ -82,21 +75,21 @@ namespace Erp.UserManagementSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePermission(int id)
         {
-            var permission = await _context.Permissions.FindAsync(id);
+            var permission = await context.Permissions.FindAsync(id);
             if (permission == null)
             {
                 return NotFound();
             }
 
-            _context.Permissions.Remove(permission);
-            await _context.SaveChangesAsync();
+            context.Permissions.Remove(permission);
+            await context.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool PermissionExists(int id)
         {
-            return _context.Permissions.Any(e => e.Id == id);
+            return context.Permissions.Any(e => e.Id == id);
         }
     }
 }

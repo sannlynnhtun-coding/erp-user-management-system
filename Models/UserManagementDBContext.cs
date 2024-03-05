@@ -2,12 +2,8 @@
 
 namespace ERP_user_management_sys.Models
 {
-    public class UserManagementDBContext : DbContext
+    public class UserManagementDBContext(DbContextOptions<UserManagementDBContext> options) : DbContext(options)
     {
-        public UserManagementDBContext(DbContextOptions<UserManagementDBContext> options): base (options)
-        {
-        
-        }
         public DbSet<User> Users { get; set; }
         
         public DbSet<Role> Roles { get; set; }

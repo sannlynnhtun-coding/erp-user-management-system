@@ -6,27 +6,20 @@ namespace Erp.UserManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolePermissionsController : ControllerBase
+    public class RolePermissionsController(UserManagementDBContext context) : ControllerBase
     {
-        private readonly UserManagementDBContext _context;
-
-        public RolePermissionsController(UserManagementDBContext context)
-        {
-            _context = context;
-        }
-
         // GET: api/RolePermissions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RolePermission>>> GetRolePermissions()
         {
-            return await _context.RolePermissions.ToListAsync();
+            return await context.RolePermissions.ToListAsync();
         }
 
         // GET: api/RolePermissions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RolePermission>> GetRolePermission(int id)
         {
-            var rolePermission = await _context.RolePermissions.FindAsync(id);
+            var rolePermission = await context.RolePermissions.FindAsync(id);
 
             if (rolePermission == null)
             {
@@ -46,11 +39,11 @@ namespace Erp.UserManagementSystem.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(rolePermission).State = EntityState.Modified;
+            context.Entry(rolePermission).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -72,8 +65,8 @@ namespace Erp.UserManagementSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<RolePermission>> PostRolePermission(RolePermission rolePermission)
         {
-            _context.RolePermissions.Add(rolePermission);
-            await _context.SaveChangesAsync();
+            context.RolePermissions.Add(rolePermission);
+            await context.SaveChangesAsync();
 
             return CreatedAtAction("GetRolePermission", new { id = rolePermission.Id }, rolePermission);
         }
@@ -82,21 +75,21 @@ namespace Erp.UserManagementSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRolePermission(int id)
         {
-            var rolePermission = await _context.RolePermissions.FindAsync(id);
+            var rolePermission = await context.RolePermissions.FindAsync(id);
             if (rolePermission == null)
             {
                 return NotFound();
             }
 
-            _context.RolePermissions.Remove(rolePermission);
-            await _context.SaveChangesAsync();
+            context.RolePermissions.Remove(rolePermission);
+            await context.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool RolePermissionExists(int id)
         {
-            return _context.RolePermissions.Any(e => e.Id == id);
+            return context.RolePermissions.Any(e => e.Id == id);
         }
     }
 }

@@ -6,27 +6,20 @@ namespace Erp.UserManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FeaturesController : ControllerBase
+    public class FeaturesController(UserManagementDBContext context) : ControllerBase
     {
-        private readonly UserManagementDBContext _context;
-
-        public FeaturesController(UserManagementDBContext context)
-        {
-            _context = context;
-        }
-
         // GET: api/Features
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Feature>>> GetFeatures()
         {
-            return await _context.Features.ToListAsync();
+            return await context.Features.ToListAsync();
         }
 
         // GET: api/Features/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Feature>> GetFeature(int id)
         {
-            var feature = await _context.Features.FindAsync(id);
+            var feature = await context.Features.FindAsync(id);
 
             if (feature == null)
             {
@@ -46,11 +39,11 @@ namespace Erp.UserManagementSystem.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(feature).State = EntityState.Modified;
+            context.Entry(feature).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -72,8 +65,8 @@ namespace Erp.UserManagementSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<Feature>> PostFeature(Feature feature)
         {
-            _context.Features.Add(feature);
-            await _context.SaveChangesAsync();
+            context.Features.Add(feature);
+            await context.SaveChangesAsync();
 
             return CreatedAtAction("GetFeature", new { id = feature.Id }, feature);
         }
@@ -82,21 +75,21 @@ namespace Erp.UserManagementSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFeature(int id)
         {
-            var feature = await _context.Features.FindAsync(id);
+            var feature = await context.Features.FindAsync(id);
             if (feature == null)
             {
                 return NotFound();
             }
 
-            _context.Features.Remove(feature);
-            await _context.SaveChangesAsync();
+            context.Features.Remove(feature);
+            await context.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool FeatureExists(int id)
         {
-            return _context.Features.Any(e => e.Id == id);
+            return context.Features.Any(e => e.Id == id);
         }
     }
 }
